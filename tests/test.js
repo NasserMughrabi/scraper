@@ -7,21 +7,39 @@ const assert = require("assert");
 // Now --------------
 // Find entry level Software Engineer jobs at Utah companies
 
+// "SoFi", COMPLEX
+// "Adobe", COMPLEX
+// "Ancestry",
+// "Lucid Software",
+// "Instructor",
+// "Overstock",
+// "University Of Utah",
+// "University Of Utah Health",
+// "Weave", COMPLEX
+// "Divvy",
+// "Pattern",
+// "Health Catalyst",
+// "Simplus",
+// "Clearlink",
+// "Canopy",
+// "Henry Schein One",
+// "Young Automotive Group",
+
 const UtahCompanies = [
-  //   {
-  //     companyName: "Sorenson",
-  //     FilteredURL:
-  //       "https://recruiting2.ultipro.com/SOR1001SORE/JobBoard/1fe5e40e-4e0c-4b11-86e3-9a8e1f396263/?q=&o=postedDateDesc&f5=xIKn0bPiEku4pQdds-6CmQ+aqi5uoXa-kWy23u2oiGC-A+yJ9c9kLIjUqZ_nEk7RAAkA+wjOrzqEsFk6uoZC_VDMj2A",
-  //     className: "opportunity-link",
-  //     jobTitle: "Software Engineer",
-  //   },
-  //   {
-  //     companyName: "Cox",
-  //     FilteredURL:
-  //       "https://jobs.coxenterprises.com/en/jobs/?search=&req=software+engineer&location=Utah%2C+USA&type=&posted=3&pagesize=20&locname=Utah&lat=39.3209801&lng=-111.0937311#results",
-  //     className: "stretched-link",
-  //     jobTitle: "Software Engineer I",
-  //   },
+  {
+    companyName: "Sorenson",
+    FilteredURL:
+      "https://recruiting2.ultipro.com/SOR1001SORE/JobBoard/1fe5e40e-4e0c-4b11-86e3-9a8e1f396263/?q=&o=postedDateDesc&f5=xIKn0bPiEku4pQdds-6CmQ+aqi5uoXa-kWy23u2oiGC-A+yJ9c9kLIjUqZ_nEk7RAAkA+wjOrzqEsFk6uoZC_VDMj2A",
+    className: "opportunity-link",
+    jobTitle: "Software Engineer",
+  },
+  {
+    companyName: "Cox",
+    FilteredURL:
+      "https://jobs.coxenterprises.com/en/jobs/?search=&req=software+engineer&location=Utah%2C+USA&type=&posted=3&pagesize=20&locname=Utah&lat=39.3209801&lng=-111.0937311#results",
+    className: "stretched-link",
+    jobTitle: "Software Engineer I",
+  },
   {
     companyName: "Pluralsight",
     FilteredURL:
@@ -37,8 +55,6 @@ const UtahCompanies = [
     jobTitle: "Software Engineer",
   },
 ];
-
-
 
 const commonSearch = async (driver, company) => {
   // launch the browser
@@ -78,11 +94,14 @@ const sleep = (milliseconds) => {
 const findUtahJobs = async () => {
   let driver = await new Builder().forBrowser("chrome").build();
   try {
-    // searchQualtrics(driver);
-    // searchAdobe(driver);
-    // searchDomo(driver);
+    // await searchAdobe(driver);
+    // await searchQualtrics(driver);
+    // await searchDomo(driver);
+    // await searchFusion(driver);
+    // await searchBambooHR(driver);
+    // await searchPodium(driver);
     for (const company of UtahCompanies) {
-      console.log(company.companyName);
+      console.log("\n" + company.companyName, "-------------------");
       await commonSearch(driver, company);
     }
   } finally {

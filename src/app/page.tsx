@@ -1,7 +1,7 @@
-// "use client";
+"use client";
 import { Box, Button, Center } from "@chakra-ui/react";
 // import { useRouter } from "next/navigation";
-
+import JobStatus from "./compnents/JobStatus";
 
 export default function Home() {
   // const router = useRouter();
@@ -15,6 +15,7 @@ export default function Home() {
     >
       {/* hello */}
       {/* <Button onClick={() => router.push("/home")}>Home</Button> */}
+      <JobStatus />
     </Box>
   );
 }
