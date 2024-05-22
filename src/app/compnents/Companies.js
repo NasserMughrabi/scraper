@@ -1,6 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Box, Text, VStack, useDisclosure, IconButton } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  VStack,
+  useDisclosure,
+  IconButton,
+  Link,
+} from "@chakra-ui/react";
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import JobStatus from "./JobStatus";
 
@@ -58,7 +65,7 @@ const CompanyItem = ({ company, positions }) => {
       </Box>
       {isOpen && (
         <VStack spacing={0}>
-          {positions.map((company, index) => (
+          {positions.map((position, index) => (
             <Box
               key={index}
               color={"white"}
@@ -79,9 +86,15 @@ const CompanyItem = ({ company, positions }) => {
               cursor={"pointer"}
             >
               <Box display={"flex"} justifyContent={"space-between"}>
-                <Text fontSize="md" mt="2" mr={"10"}>
-                  {company}
-                </Text>
+                <Link
+                  href={position.jobURL}
+                  isExternal
+                  fontSize="md"
+                  mt="2"
+                  mr={"10"}
+                >
+                  {position.jobTitle}
+                </Link>
                 {/* <JobStatus /> */}
               </Box>
             </Box>
@@ -121,11 +134,24 @@ const Companies = () => {
   if (error) return <p>Error: {error}</p>;
   // return <div>{JSON.stringify(data)}</div>;
   return (
-    <VStack align="center" mx="auto" backgroundColor={"#1c1c21"} py={10}>
-      {companies.map((company, index) => {
-        console.log(company, data[company], "here");
+    <VStack height={"100vh"} overflowY={"auto"} align="center" mx="auto" backgroundColor={"#1c1c21"} py={10}>
+      <Box
+        color="white"
+        bgGradient="linear(to-r, red.700, red.900)" // Using a gradient background
+        // bgGradient="linear(to-r, red.700, blue.700, green.700)" // Using a gradient background
+        p={4}
+        m={4}
+        fontSize="2xl"
+        fontWeight="bold"
+        shadow="md"
+        textAlign="center"
+        width={"full"}
+      >
+        Utah Companies
+      </Box>
+      {companies.sort().map((company, index) => {
         const positions = data[company];
-        console.log(positions);
+        console.log(positions)
         return (
           <CompanyItem key={index} company={company} positions={positions} />
         );
@@ -139,11 +165,12 @@ const convertToMap = (data) => {
   for (const company of data) {
     const companyName = company.companyName;
     const jobTitle = company.jobTitle;
+    const jobURL = company.jobURL;
     console.log(companyName, jobTitle);
     if (companiesMap[companyName]) {
-      companiesMap[companyName].push(jobTitle);
+      companiesMap[companyName].push({ jobTitle, jobURL });
     } else {
-      companiesMap[companyName] = [jobTitle];
+      companiesMap[companyName] = [{ jobTitle, jobURL }];
     }
   }
   return companiesMap;
