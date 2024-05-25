@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Text,
@@ -30,6 +30,14 @@ const companies = [
 
 const UTCompanies = () => {
   const [utahData, setUtahData] = useState({});
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedPositions = localStorage.getItem("utahCompaniesPositions");
+      if (savedPositions) {
+        setUtahData(JSON.parse(savedPositions));
+      }
+    }
+  }, []);
 
   return (
     <VStack

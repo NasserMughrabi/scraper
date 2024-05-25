@@ -25,17 +25,18 @@ const Header = ({ api, setData, title }) => {
     setLoading(true);
     if (process.env.REACT_APP_ENV === "production") {
       // Use pre-scraped data if in production
-      const preScrapedData =
-        api === "search-utah-jobs"
-          ? utahCompaniesPreScrapedData
-          : linkedinPreScrapedData;
-      saveDataToLocalStorage(preScrapedData);
-      setData(preScrapedData);
+      if (api == "search-utah-jobs") {
+        saveDataToLocalStorage("utah", utahCompaniesPreScrapedData);
+        setData(utahCompaniesPreScrapedData);
+      } else {
+        saveDataToLocalStorage("linkedin", linkedinPreScrapedData);
+        setData(linkedinPreScrapedData);
+      }
       setLoading(false);
-      setError(null); // Reset any previous errors
+      setError(null);
       return;
     }
-    
+
     fetch(`http://127.0.0.1:5000/${api}`)
       .then((response) => {
         if (!response.ok) {
@@ -47,11 +48,11 @@ const Header = ({ api, setData, title }) => {
         if (api == "search-utah-jobs") {
           const companiesMap = convertToMap(data);
           // console.log(companiesMap);
-          saveDataToLocalStorage(companiesMap);
+          saveDataToLocalStorage("utah", companiesMap);
           setData(companiesMap);
         } else {
           // console.log(data);
-          saveDataToLocalStorage(data);
+          saveDataToLocalStorage("linkedin", data);
           setData(data);
         }
         setLoading(false);
@@ -142,11 +143,14 @@ const convertToMap = (data) => {
   return companiesMap;
 };
 
-const saveDataToLocalStorage = (data) => {
+const saveDataToLocalStorage = (filter, data) => {
   if (typeof window !== "undefined") {
+    if (filter == "utah") {
+      localStorage.setItem("utahCompaniesPositions", JSON.stringify(data));
+      return;
+    }
     localStorage.setItem("utahLinkedinPositions", JSON.stringify(data));
   }
-  return;
 };
 
 export default Header;
