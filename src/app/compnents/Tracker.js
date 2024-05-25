@@ -90,7 +90,7 @@ const Tracker = () => {
       >
         <Table variant="simple" colorScheme="blue">
           <TableCaption>
-            {localStoragePositions.length} Tracked Jobs
+            <Text color={"gray.400"} fontWeight={"bold"}>{localStoragePositions.length} Tracked Jobs</Text>
           </TableCaption>
           <Thead>
             <Tr>

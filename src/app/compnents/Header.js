@@ -85,7 +85,7 @@ const Header = ({ api, setData, title }) => {
         <Box display={"flex"}>
           <Alert status="info">
             <AlertIcon />
-            Disclaimer: The data displayed was pre-scraped on May 25, 2024, to
+            Disclaimer: The data displayed was scraped on May 25, 2024, to
             minimize hosting costs.
           </Alert>
           <CloseButton
