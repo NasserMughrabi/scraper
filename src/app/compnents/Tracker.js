@@ -28,13 +28,15 @@ import { CheckIcon, CheckCircleIcon } from "@chakra-ui/icons";
 
 const Tracker = () => {
   // Get the to-be tracked positions from local storage
-  const [localStoragePositions, setLocalStoragePositions] = useState(() => {
-    const savedPositions = localStorage.getItem("positions");
-    return savedPositions ? JSON.parse(savedPositions) : [];
-  });
-
-  const [referral, setReferral] = useState(false);
-  const [tailoredResume, setTailoredResume] = useState(false);
+  const [localStoragePositions, setLocalStoragePositions] = useState([]);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedPositions = localStorage.getItem("positions");
+      if (savedPositions) {
+        setLocalStoragePositions(JSON.parse(savedPositions));
+      }
+    }
+  }, []);
 
   const truncateJobTitle = (title) => {
     return title.length > 28 ? `${title.slice(0, 28)}...` : title;
@@ -52,7 +54,9 @@ const Tracker = () => {
       return position;
     });
     setLocalStoragePositions(updatedPositions);
-    localStorage.setItem("positions", JSON.stringify(updatedPositions));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("positions", JSON.stringify(updatedPositions));
+    }
   };
 
   const deletePosition = (index) => {
@@ -60,7 +64,9 @@ const Tracker = () => {
       (_, posIndex) => index !== posIndex
     );
     setLocalStoragePositions(updatedPositions);
-    localStorage.setItem("positions", JSON.stringify(updatedPositions));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("positions", JSON.stringify(updatedPositions));
+    }
   };
 
   return (
@@ -262,7 +268,9 @@ const AddPosition = ({ localStoragePositions, setLocalStoragePositions }) => {
   const handleAddPosition = () => {
     const updatedPositions = [...localStoragePositions, newPosition];
     setLocalStoragePositions(updatedPositions);
-    localStorage.setItem("positions", JSON.stringify(updatedPositions));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("positions", JSON.stringify(updatedPositions));
+    }
     setNewPosition({
       companyName: "",
       jobTitle: "",
