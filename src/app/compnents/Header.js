@@ -1,5 +1,14 @@
 import React from "react";
-import { Box, Text, Button, Spinner, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Button,
+  Spinner,
+  Flex,
+  Alert,
+  AlertIcon,
+  CloseButton,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import {
   utahCompaniesPreScrapedData,
@@ -9,12 +18,10 @@ import {
 const Header = ({ api, setData, title }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // useEffect(() => {
-    
-  // }, [linkedinData]);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   const scrape = () => {
+    setShowDisclaimer(true);
     setLoading(true);
     fetch(`http://127.0.0.1:5000/${api}`)
       .then((response) => {
@@ -27,11 +34,11 @@ const Header = ({ api, setData, title }) => {
         if (api == "search-utah-jobs") {
           const companiesMap = convertToMap(data);
           // console.log(companiesMap);
-          saveDataToLocalStorage(companiesMap)
+          saveDataToLocalStorage(companiesMap);
           setData(companiesMap);
         } else {
           // console.log(data);
-          saveDataToLocalStorage(data)
+          saveDataToLocalStorage(data);
           setData(data);
         }
         setLoading(false);
@@ -41,11 +48,11 @@ const Header = ({ api, setData, title }) => {
         console.log("api error: ", error);
         if (api == "search-utah-jobs") {
           // console.log(utahCompaniesPreScrapedData);
-          saveDataToLocalStorage(utahCompaniesPreScrapedData)
+          saveDataToLocalStorage(utahCompaniesPreScrapedData);
           setData(utahCompaniesPreScrapedData);
         } else {
           // console.log(linkedinPreScrapedData);
-          saveDataToLocalStorage(linkedinPreScrapedData)
+          saveDataToLocalStorage(linkedinPreScrapedData);
           setData(linkedinPreScrapedData);
         }
         setError(error.message);
@@ -70,6 +77,20 @@ const Header = ({ api, setData, title }) => {
       >
         {title}
       </Box>
+      {showDisclaimer && (
+        <Box display={"flex"}>
+          <Alert status="info">
+            <AlertIcon />
+            Disclaimer: The data displayed was pre-scraped on May 25, 2024, to
+            minimize hosting costs.
+          </Alert>
+          <CloseButton
+            color={"white"}
+            onClick={() => setShowDisclaimer(false)}
+          />
+        </Box>
+      )}
+
       <Box mb={5}>
         {loading ? (
           <Flex>
@@ -84,7 +105,7 @@ const Header = ({ api, setData, title }) => {
               color={"white"}
               pr={2}
             >
-              Scraping... This might take a few minutes
+              Scraping... This may take a few minutes
             </Text>
             <Spinner color="red.700" />
           </Flex>
@@ -120,12 +141,9 @@ const convertToMap = (data) => {
 
 const saveDataToLocalStorage = (data) => {
   if (typeof window !== "undefined") {
-    localStorage.setItem(
-      "utahLinkedinPositions",
-      JSON.stringify(data)
-    );
+    localStorage.setItem("utahLinkedinPositions", JSON.stringify(data));
   }
-  return
-}
+  return;
+};
 
 export default Header;

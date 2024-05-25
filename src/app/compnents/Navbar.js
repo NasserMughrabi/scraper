@@ -1,6 +1,7 @@
 import { Box, Flex, Button, HStack } from "@chakra-ui/react";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const navs = [
   ["utah", "Utah Companies"],
@@ -12,6 +13,8 @@ const navs = [
 
 const Navbar = () => {
   const router = useRouter();
+  const pathname = usePathname();
+
   return (
     <HStack
       spacing={5}
@@ -25,11 +28,13 @@ const Navbar = () => {
       zIndex={1}
     >
       {navs.map((nav, index) => {
+        const isActive = pathname === `/${nav[0]}`;
         return (
           <Box
             key={index}
             p={2}
             borderRadius="md"
+            bg={isActive ? "blue.700" : undefined}
             _hover={{ bg: "blue.700" }}
             onClick={() => router.push(`/${nav[0]}`)}
           >
