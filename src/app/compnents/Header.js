@@ -27,11 +27,11 @@ const Header = ({ api, setData, title }) => {
         if (api == "search-utah-jobs") {
           const companiesMap = convertToMap(data);
           // console.log(companiesMap);
-          // saveDataToLocalStorage(companiesMap)
+          saveDataToLocalStorage(companiesMap)
           setData(companiesMap);
         } else {
           // console.log(data);
-          // saveDataToLocalStorage(data)
+          saveDataToLocalStorage(data)
           setData(data);
         }
         setLoading(false);
@@ -41,11 +41,11 @@ const Header = ({ api, setData, title }) => {
         console.log("api error: ", error);
         if (api == "search-utah-jobs") {
           // console.log(utahCompaniesPreScrapedData);
-          // saveDataToLocalStorage(utahCompaniesPreScrapedData)
+          saveDataToLocalStorage(utahCompaniesPreScrapedData)
           setData(utahCompaniesPreScrapedData);
         } else {
           // console.log(linkedinPreScrapedData);
-          // saveDataToLocalStorage(linkedinPreScrapedData)
+          saveDataToLocalStorage(linkedinPreScrapedData)
           setData(linkedinPreScrapedData);
         }
         setError(error.message);
