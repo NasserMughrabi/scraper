@@ -1,12 +1,15 @@
+"use client";
 import React from "react";
-import { Box } from "@chakra-ui/react";
 import Google from "../compnents/Google";
-const GoogleJobs = () => {
+import Navbar from "../compnents/Navbar";
+
+const page = () => {
   return (
-    <Box>
+    <>
+      <Navbar />
       <Google />
-    </Box>
+    </>
   );
 };
 
-export default GoogleJobs;
+export default page;

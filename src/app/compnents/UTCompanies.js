@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Text,
@@ -9,7 +9,7 @@ import {
   Link,
 } from "@chakra-ui/react";
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import JobStatus from "./JobStatus";
+import Header from "./Header";
 
 const companies = [
   "Qualtrics",
@@ -20,7 +20,39 @@ const companies = [
   "Cox",
   "Pluralsight",
   "Vivint",
+  "Nice",
+  "Pattern",
+  "CHG Healthcare",
+  "Select Health",
+  "Zions Bancorporation",
+  "Utah Transit Authority",
 ];
+
+const UTCompanies = () => {
+  const [utahData, setUtahData] = useState([]);
+
+  return (
+    <VStack
+      height={"100vh"}
+      overflowY={"auto"}
+      align="center"
+      mx="auto"
+      backgroundColor={"#1c1c21"}
+      py={10}
+    >
+      <Header api={"search-utah-jobs"} setUtahData={setUtahData} title={"Utah Companies"} />
+      {companies.sort().map((company, index) => {
+        let positions = utahData[company];
+        if (!positions) {
+          positions = [{ jobTitle: "None Available" }];
+        }
+        return (
+          <CompanyItem key={index} company={company} positions={positions} />
+        );
+      })}
+    </VStack>
+  );
+};
 
 const CompanyItem = ({ company, positions }) => {
   const { isOpen, onToggle } = useDisclosure();
@@ -105,75 +137,4 @@ const CompanyItem = ({ company, positions }) => {
   );
 };
 
-const Companies = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetch("http://127.0.0.1:5000/start-job-search")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const companiesMap = convertToMap(data);
-        setData(companiesMap);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error.message);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  // return <div>{JSON.stringify(data)}</div>;
-  return (
-    <VStack height={"100vh"} overflowY={"auto"} align="center" mx="auto" backgroundColor={"#1c1c21"} py={10}>
-      <Box
-        color="white"
-        bgGradient="linear(to-r, red.700, red.900)" // Using a gradient background
-        // bgGradient="linear(to-r, red.700, blue.700, green.700)" // Using a gradient background
-        p={4}
-        m={4}
-        fontSize="2xl"
-        fontWeight="bold"
-        shadow="md"
-        textAlign="center"
-        width={"full"}
-      >
-        Utah Companies
-      </Box>
-      {companies.sort().map((company, index) => {
-        const positions = data[company];
-        console.log(positions)
-        return (
-          <CompanyItem key={index} company={company} positions={positions} />
-        );
-      })}
-    </VStack>
-  );
-};
-
-const convertToMap = (data) => {
-  const companiesMap = {};
-  for (const company of data) {
-    const companyName = company.companyName;
-    const jobTitle = company.jobTitle;
-    const jobURL = company.jobURL;
-    console.log(companyName, jobTitle);
-    if (companiesMap[companyName]) {
-      companiesMap[companyName].push({ jobTitle, jobURL });
-    } else {
-      companiesMap[companyName] = [{ jobTitle, jobURL }];
-    }
-  }
-  return companiesMap;
-};
-
-export default Companies;
+export default UTCompanies;

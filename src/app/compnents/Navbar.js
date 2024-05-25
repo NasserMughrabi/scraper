@@ -1,19 +1,18 @@
 import { Box, Flex, Button, HStack } from "@chakra-ui/react";
 import React from "react";
+import { useRouter } from "next/navigation";
 
-const Navbar = ({ setComponent }) => {
+const navs = [
+  ["utah", "Utah Companies"],
+  ["linkedin", "Linkedin Listings"],
+  ["indeed", "Indeed Listings"],
+  ["google", "Google Jobs"],
+  ["tracker", "Jobs Tracker"],
+];
+
+const Navbar = () => {
+  const router = useRouter();
   return (
-    // <Flex
-    //   as="nav"
-    //   align="center"
-    //   justify="space-between"
-    //   wrap="wrap"
-    //   padding="1rem"
-    //   bg="blue.600"  // Example background color
-    //   color="white"
-    //   shadow="sm"
-    //   width="full"
-    // >
     <HStack
       spacing={5}
       bg="blue.600"
@@ -22,41 +21,23 @@ const Navbar = ({ setComponent }) => {
       width="full"
       cursor="pointer"
       p={"4px"}
+      position={"absolute"}
+      zIndex={1}
     >
-      <Box
-        p={2}
-        borderRadius="md"
-        _hover={{ bg: "blue.700" }}
-        onClick={() => setComponent("utah companies")}
-      >
-        Utah Companies
-      </Box>
-      <Box
-        p={2}
-        borderRadius="md"
-        _hover={{ bg: "blue.700" }}
-        onClick={() => setComponent("linkedin listings")}
-      >
-        LinkedIn Listings
-      </Box>
-      <Box
-        p={2}
-        borderRadius="md"
-        _hover={{ bg: "blue.700" }}
-        onClick={() => setComponent("indeed listings")}
-      >
-        Indeed Listings
-      </Box>
-      <Box
-        p={2}
-        borderRadius="md"
-        _hover={{ bg: "blue.700" }}
-        onClick={() => setComponent("google jobs")}
-      >
-        Google Jobs
-      </Box>
+      {navs.map((nav, index) => {
+        return (
+          <Box
+            key={index}
+            p={2}
+            borderRadius="md"
+            _hover={{ bg: "blue.700" }}
+            onClick={() => router.push(`/${nav[0]}`)}
+          >
+            {nav[1]}
+          </Box>
+        );
+      })}
     </HStack>
-    // </Flex>
   );
 };
 

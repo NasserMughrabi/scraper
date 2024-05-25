@@ -1,15 +1,14 @@
-"use client"
+"use client";
 import React from "react";
-import { Box } from "@chakra-ui/react";
-import LinkedIn from "../compnents/LinkedIn";
+import Indeed from "../compnents/Indeed";
 import Navbar from "../compnents/Navbar";
 
 const page = () => {
   return (
-    <Box>
+    <>
       <Navbar />
-      <LinkedIn />
-    </Box>
+      <Indeed />
+    </>
   );
 };
 
