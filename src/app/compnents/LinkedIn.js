@@ -7,22 +7,24 @@ import PositionItem from "./PositionItem";
 
 const LinkedIn = () => {
   const [filter, setFilter] = useState("utah");
-  const [linkedinData, setLinkedinData] = useState([]);
-  useEffect(() => {
+  const [linkedinData, setLinkedinData] = useState(() => {
     if (typeof window !== "undefined") {
       const savedPositions = localStorage.getItem("utahLinkedinPositions");
       if (savedPositions) {
-        setLinkedinData(JSON.parse(savedPositions));
+        // setLinkedinData(JSON.parse(savedPositions));
+        return JSON.parse(savedPositions)
+      } else {
+        return []
       }
     }
-  }, []);
+  });
+  // useEffect(() => {
+    
+  // }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      localStorage.setItem(
-        "utahLinkedinPositions",
-        JSON.stringify(linkedinData)
-      );
+      localStorage.setItem("utahLinkedinPositions", JSON.stringify(linkedinData));
     }
   }, [linkedinData]);
 

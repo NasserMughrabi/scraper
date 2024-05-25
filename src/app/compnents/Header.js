@@ -1,10 +1,18 @@
 import React from "react";
 import { Box, Text, Button, Spinner, Flex } from "@chakra-ui/react";
 import { useState } from "react";
+import {
+  utahCompaniesPreScrapedData,
+  linkedinPreScrapedData,
+} from "../PreScrapedData";
 
 const Header = ({ api, setData, title }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // useEffect(() => {
+    
+  // }, [linkedinData]);
 
   const scrape = () => {
     setLoading(true);
@@ -18,15 +26,28 @@ const Header = ({ api, setData, title }) => {
       .then((data) => {
         if (api == "search-utah-jobs") {
           const companiesMap = convertToMap(data);
-          console.log(companiesMap);
+          // console.log(companiesMap);
+          // saveDataToLocalStorage(companiesMap)
           setData(companiesMap);
         } else {
+          // console.log(data);
+          // saveDataToLocalStorage(data)
           setData(data);
         }
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+        // If the production, there won't be server, so use prescraped data
+        console.log("api error: ", error);
+        if (api == "search-utah-jobs") {
+          // console.log(utahCompaniesPreScrapedData);
+          // saveDataToLocalStorage(utahCompaniesPreScrapedData)
+          setData(utahCompaniesPreScrapedData);
+        } else {
+          // console.log(linkedinPreScrapedData);
+          // saveDataToLocalStorage(linkedinPreScrapedData)
+          setData(linkedinPreScrapedData);
+        }
         setError(error.message);
         setLoading(false);
       });
@@ -96,5 +117,15 @@ const convertToMap = (data) => {
   }
   return companiesMap;
 };
+
+const saveDataToLocalStorage = (data) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem(
+      "utahLinkedinPositions",
+      JSON.stringify(data)
+    );
+  }
+  return
+}
 
 export default Header;
