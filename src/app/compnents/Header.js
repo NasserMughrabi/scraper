@@ -23,6 +23,19 @@ const Header = ({ api, setData, title }) => {
   const scrape = () => {
     setShowDisclaimer(true);
     setLoading(true);
+    if (process.env.REACT_APP_ENV === "production") {
+      // Use pre-scraped data if in production
+      const preScrapedData =
+        api === "search-utah-jobs"
+          ? utahCompaniesPreScrapedData
+          : linkedinPreScrapedData;
+      saveDataToLocalStorage(preScrapedData);
+      setData(preScrapedData);
+      setLoading(false);
+      setError(null); // Reset any previous errors
+      return;
+    }
+    
     fetch(`http://127.0.0.1:5000/${api}`)
       .then((response) => {
         if (!response.ok) {
@@ -44,17 +57,7 @@ const Header = ({ api, setData, title }) => {
         setLoading(false);
       })
       .catch((error) => {
-        // If the production, there won't be server, so use prescraped data
         console.log("api error: ", error);
-        if (api == "search-utah-jobs") {
-          // console.log(utahCompaniesPreScrapedData);
-          saveDataToLocalStorage(utahCompaniesPreScrapedData);
-          setData(utahCompaniesPreScrapedData);
-        } else {
-          // console.log(linkedinPreScrapedData);
-          saveDataToLocalStorage(linkedinPreScrapedData);
-          setData(linkedinPreScrapedData);
-        }
         setError(error.message);
         setLoading(false);
       });
