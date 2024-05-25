@@ -29,7 +29,7 @@ const companies = [
 ];
 
 const UTCompanies = () => {
-  const [utahData, setUtahData] = useState([]);
+  const [utahData, setUtahData] = useState({});
 
   return (
     <VStack
@@ -40,7 +40,7 @@ const UTCompanies = () => {
       backgroundColor={"#1c1c21"}
       py={10}
     >
-      <Header api={"search-utah-jobs"} setUtahData={setUtahData} title={"Utah Companies"} />
+      <Header api={"search-utah-jobs"} setData={setUtahData} title={"Utah Companies"} />
       {companies.sort().map((company, index) => {
         let positions = utahData[company];
         if (!positions) {

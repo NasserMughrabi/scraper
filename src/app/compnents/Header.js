@@ -18,6 +18,7 @@ const Header = ({ api, setData, title }) => {
       .then((data) => {
         if (api == "search-utah-jobs") {
           const companiesMap = convertToMap(data);
+          console.log(companiesMap);
           setData(companiesMap);
         } else {
           setData(data);
@@ -87,15 +88,11 @@ const pickGradient = (title) => {
 const convertToMap = (data) => {
   const companiesMap = {};
   for (const company of data) {
-    const companyName = company.companyName;
-    const jobTitle = company.jobTitle;
-    const jobURL = company.jobURL;
-    console.log(companyName, jobTitle);
-    if (companiesMap[companyName]) {
-      companiesMap[companyName].push({ jobTitle, jobURL });
-    } else {
-      companiesMap[companyName] = [{ jobTitle, jobURL }];
+    const { companyName, jobTitle, jobURL } = company;
+    if (!companiesMap[companyName]) {
+      companiesMap[companyName] = [];
     }
+    companiesMap[companyName].push({ jobTitle, jobURL });
   }
   return companiesMap;
 };
