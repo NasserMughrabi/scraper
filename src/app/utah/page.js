@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import UTCompanies from "../compnents/UTCompanies";
+import UTCompanies from "../compnents/sources/UTCompanies";
 import Navbar from "../compnents/Navbar";
 
 const page = () => {

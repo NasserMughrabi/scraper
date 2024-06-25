@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Google from "../compnents/Google";
+import Google from "../compnents/sources/Google";
 import Navbar from "../compnents/Navbar";
 
 const page = () => {

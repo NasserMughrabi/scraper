@@ -90,7 +90,9 @@ const Tracker = () => {
       >
         <Table variant="simple" colorScheme="blue">
           <TableCaption>
-            <Text color={"gray.400"} fontWeight={"bold"}>{localStoragePositions.length} Tracked Jobs</Text>
+            <Text color={"gray.400"} fontWeight={"bold"}>
+              {localStoragePositions.length} Tracked Jobs
+            </Text>
           </TableCaption>
           <Thead>
             <Tr>
@@ -105,80 +107,93 @@ const Tracker = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {localStoragePositions.map((position, index) => (
-              // <TrackerItem key={index} position={position} />
-              <Tr
-                key={index}
-                backgroundColor={position.status == "Offer" ? "green.800" : ""}
-              >
-                <Td>{truncateCompanyName(position.companyName)}</Td>
-                <Td>
-                  <Link
-                    href={position.jobURL}
-                    isExternal
-                    fontSize="md"
-                    mt="2"
-                    mr={"10"}
-                    color={"blue.300"}
-                    textDecoration={"underline"}
-                  >
-                    {truncateJobTitle(position.jobTitle)}
-                  </Link>
-                </Td>
-                <Td>
-                  {position.date}
-                  {/* <CheckBtn check={true} /> */}
-                </Td>
-                <Td>
-                  <MarkItem
-                    value={position.referral}
-                    onUpdate={() =>
-                      updatePositionField(index, "referral", !position.referral)
-                    }
-                  />
-                </Td>
-                <Td>
-                  <MarkItem
-                    value={position.tailoredResume}
-                    onUpdate={() =>
-                      updatePositionField(
-                        index,
-                        "tailoredResume",
-                        !position.tailoredResume
-                      )
-                    }
-                  />
-                </Td>
-                <Td>
-                  <MarkItem
-                    value={position.coverLetter}
-                    onUpdate={() =>
-                      updatePositionField(
-                        index,
-                        "coverLetter",
-                        !position.coverLetter
-                      )
-                    }
-                  />
-                </Td>
-                <Td>
-                  <MarkItem
-                    type="status"
-                    value={position.status}
-                    onUpdate={(newStatus) =>
-                      updatePositionField(index, "status", newStatus)
-                    }
-                  />
-                </Td>
-                <Td>
-                  <CloseButton
-                    colorScheme="red"
-                    _hover={{ backgroundColor: "#E53E3E", color: "white" }}
-                    onClick={() => deletePosition(index)}
-                  />
-                </Td>
-              </Tr>
-            ))}
+            {localStoragePositions.map((position, index) => {
+              let positionStatusColor;
+              if (position.status.toLowerCase() == "offer") {
+                positionStatusColor = "green.800";
+              } else if (
+                position.status.toLowerCase() == "rejected" ||
+                position.status.toLowerCase() == "email rejected"
+              ) {
+                positionStatusColor = "red.800";
+              } else {
+                positionStatusColor = "";
+              }
+              return (
+                <Tr key={index} backgroundColor={positionStatusColor}>
+                  <Td>{truncateCompanyName(position.companyName)}</Td>
+                  <Td>
+                    <Link
+                      href={position.jobURL}
+                      isExternal
+                      fontSize="md"
+                      mt="2"
+                      mr={"10"}
+                      color={"blue.300"}
+                      textDecoration={"underline"}
+                    >
+                      {truncateJobTitle(position.jobTitle)}
+                    </Link>
+                  </Td>
+                  <Td>
+                    {position.date}
+                    {/* <CheckBtn check={true} /> */}
+                  </Td>
+                  <Td>
+                    <MarkItem
+                      value={position.referral}
+                      onUpdate={() =>
+                        updatePositionField(
+                          index,
+                          "referral",
+                          !position.referral
+                        )
+                      }
+                    />
+                  </Td>
+                  <Td>
+                    <MarkItem
+                      value={position.tailoredResume}
+                      onUpdate={() =>
+                        updatePositionField(
+                          index,
+                          "tailoredResume",
+                          !position.tailoredResume
+                        )
+                      }
+                    />
+                  </Td>
+                  <Td>
+                    <MarkItem
+                      value={position.coverLetter}
+                      onUpdate={() =>
+                        updatePositionField(
+                          index,
+                          "coverLetter",
+                          !position.coverLetter
+                        )
+                      }
+                    />
+                  </Td>
+                  <Td>
+                    <MarkItem
+                      type="status"
+                      value={position.status}
+                      onUpdate={(newStatus) =>
+                        updatePositionField(index, "status", newStatus)
+                      }
+                    />
+                  </Td>
+                  <Td>
+                    <CloseButton
+                      colorScheme="red"
+                      _hover={{ backgroundColor: "#E53E3E", color: "white" }}
+                      onClick={() => deletePosition(index)}
+                    />
+                  </Td>
+                </Tr>
+              );
+            })}
           </Tbody>
         </Table>
         <AddPosition

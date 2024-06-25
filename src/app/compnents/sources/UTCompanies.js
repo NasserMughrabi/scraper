@@ -9,24 +9,38 @@ import {
   Link,
 } from "@chakra-ui/react";
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import Header from "./Header";
+import Header from "../Header";
 
 const companies = [
-  "Qualtrics",
+  "Adobe",
+  "Awardco",
+  "Ancestry",
+  "BambooHR",
+  "CHG Healthcare",
+  "Clearlink",
+  "Cox",
+  "Divvy",
   "Domo",
   "Fusion",
-  "BambooHR",
-  "Sorenson",
-  "Cox",
-  "Pluralsight",
-  "Vivint",
+  "HTC Global Services",
+  "Intermountain Healthcare",
+  "Lucid",
+  "Motorola Solutions",
   "Nice",
   "Pattern",
-  "CHG Healthcare",
+  "Plaid",
+  "Pluralsight",
+  "Qualtrics",
   "Select Health",
-  "Zions Bancorporation",
+  "Sorenson",
+  "SoFi",
   "Utah Transit Authority",
+  "Vivint",
+  "Zions Bancorporation",
+  "bioMérieux"
 ];
+
+
 
 const UTCompanies = () => {
   const [utahData, setUtahData] = useState({});
@@ -48,7 +62,11 @@ const UTCompanies = () => {
       backgroundColor={"#1c1c21"}
       py={10}
     >
-      <Header api={"search-utah-jobs"} setData={setUtahData} title={"Utah Companies"} />
+      <Header
+        api={"search-utah-jobs"}
+        setData={setUtahData}
+        title={"Utah Companies"}
+      />
       {companies.sort().map((company, index) => {
         let positions = utahData[company];
         if (!positions) {

@@ -2,8 +2,8 @@
 import React from "react";
 import { useState } from "react";
 import { Box, Text, VStack, Link } from "@chakra-ui/react";
-import Header from "./Header";
-import PositionItem from "./PositionItem";
+import Header from "../Header";
+import PositionItem from "../PositionItem";
 
 const Indeed = () => {
   const [indeedData, setIndeedData] = useState([]);

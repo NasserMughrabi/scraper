@@ -2,8 +2,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Box, Text, VStack, Link, Flex, Button } from "@chakra-ui/react";
-import Header from "./Header";
-import PositionItem from "./PositionItem";
+import Header from "../Header";
+import PositionItem from "../PositionItem";
 
 const LinkedIn = () => {
   const [filter, setFilter] = useState("utah");
@@ -29,9 +29,14 @@ const LinkedIn = () => {
         pb={20}
       >
         <Header
-          api={"search-linkedin-jobs"}
+          api={"search-linkedin-utah-jobs"}
           setData={setLinkedinData}
-          title={"LinkedIn Listings"}
+          title={"LinkedIn Utah Listings"}
+        />
+        <Header
+          api={"search-linkedin-usa-jobs"}
+          setData={setLinkedinData}
+          title={"LinkedIn USA Listings"}
         />
         <Flex justifyContent="center" w="100vw" p={4}>
           <Button

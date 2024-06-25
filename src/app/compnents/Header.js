@@ -21,9 +21,9 @@ const Header = ({ api, setData, title }) => {
   const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   const scrape = () => {
-    setShowDisclaimer(true);
     setLoading(true);
     if (process.env.NEXT_PUBLIC_REACT_APP_ENV === "production") {
+      setShowDisclaimer(true);
       // Use pre-scraped data if in production
       if (api == "search-utah-jobs") {
         saveDataToLocalStorage("utah", utahCompaniesPreScrapedData);

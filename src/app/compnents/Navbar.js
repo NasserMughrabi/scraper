@@ -8,7 +8,7 @@ const navs = [
   ["linkedin", "Linkedin Listings"],
   ["indeed", "Indeed Listings"],
   ["google", "Google Jobs"],
-  ["tracker", "Jobs Tracker"],
+  ["tracker", "Job Tracker"],
 ];
 
 const Navbar = () => {
